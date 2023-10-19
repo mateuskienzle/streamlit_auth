@@ -1,14 +1,9 @@
 import streamlit as st
 import streamlit_authenticator as stauth
-import yaml
-from yaml.loader import SafeLoader
 from dependencies import add_registro, consulta, consulta_geral, create_table
+from time import sleep
 
 def main():
-    # with open('config.yaml') as file:
-    #     config = yaml.load(file, Loader=SafeLoader)
-    #     #print('credenciaiisss')
-    #     #sprint(config['credentials'])
     try:
         consulta_geral()
     except:
@@ -50,26 +45,24 @@ def login_form(authenticator):
         st.error('Username/password is incorrect')
     elif authentication_status == None:
         st.warning('Please enter your username and password')
-    clicou_em_registrar = st.button("Registrar")
-    if clicou_em_registrar:
-        st.session_state['clicou_registrar'] = True
-        st.rerun()
-    # if "user" not in st.session_state:
-    #     st.session_state.user = "Username"
-    #     st.session_state.pswrd = ""
+        clicou_em_registrar = st.button("Registrar")
+        if clicou_em_registrar:
+            st.session_state['clicou_registrar'] = True
+            st.rerun()
 
 
 def confirmation_msg():
     hashed_password = stauth.Hasher([st.session_state.pswrd]).generate()
     if st.session_state.pswrd != st.session_state.confirm_pswrd:
         st.warning('Senhas não conferem')
+        sleep(3)
     elif consulta(st.session_state.user):
         st.warning('Nome de usuário já existe.')
+        sleep(3)
     else:
-        #print(st.session_state.pswrd)
-        #print(hashed_password)
         add_registro(st.session_state.nome,st.session_state.user, hashed_password[0])
         st.success('Registro efetuado!')
+        sleep(3)
 
 def username_form():
     with st.form(key="test", clear_on_submit=True):

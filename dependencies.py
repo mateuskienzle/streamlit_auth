@@ -11,8 +11,6 @@ USERSERVER = os.getenv("USERSERVER")
 PASSWORD = os.getenv("PASSWORD")
 PORT = os.getenv("PORT")
 
-#print(DATABASE, HOST, USERSERVER, PASSWORD, PORT)
-
 @contextmanager
 def instance_cursor():
     connection = psycopg2.connect(database=DATABASE, host=HOST, user=USERSERVER, password=PASSWORD, port=PORT)
@@ -59,7 +57,7 @@ def add_registro(nome, user, senha):
     if connection:
         cursor.close()
         connection.close()
-        print("PostgreSQL connection is closed")
+        print('Conexão com PostgreSQL encerrada')
 
 def create_table():
     connection = psycopg2.connect(database=DATABASE, host=HOST, user=USERSERVER, password=PASSWORD, port=PORT)
@@ -78,4 +76,4 @@ def create_table():
     if connection:
         cursor.close()
         connection.close()
-        print("PostgreSQL connection is closed")
+        print('Conexão com PostgreSQL encerrada')
