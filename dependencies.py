@@ -11,6 +11,10 @@ USERSERVER = os.getenv("USERSERVER")
 PASSWORD = os.getenv("PASSWORD")
 PORT = os.getenv("PORT")
 
+# o "cursor" é um objeto que permite que você execute comandos SQL no banco de dados e recupere os resultados.
+#  Ele age como um ponteiro ou um marcador de posição dentro de uma transação ativa no banco de dados. 
+# O cursor permite que você envie consultas SQL para o banco de dados, recuperar os resultados dessas consultas e, em seguida, 
+# realizar operações como inserção, atualização e exclusão de dados.
 @contextmanager
 def instance_cursor():
     connection = psycopg2.connect(database=DATABASE, host=HOST, user=USERSERVER, password=PASSWORD, port=PORT)
@@ -22,7 +26,7 @@ def instance_cursor():
             cursor.close()
             connection.close()
             print('Conexão com PostgreSQL encerrada')
-    
+
 def consulta(user):
     with instance_cursor() as cursor:
         query= '''
@@ -59,7 +63,7 @@ def add_registro(nome, user, senha):
         connection.close()
         print('Conexão com PostgreSQL encerrada')
 
-def create_table():
+def cria_tabela():
     connection = psycopg2.connect(database=DATABASE, host=HOST, user=USERSERVER, password=PASSWORD, port=PORT)
     cursor = connection.cursor()
 
